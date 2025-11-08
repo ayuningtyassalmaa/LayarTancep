@@ -9,4 +9,101 @@ import UIKit
 
 class PopularMoviesCollectionViewCell: UICollectionViewCell {
     
+    static let identifier = "PopularMoviesCollectionViewCell"
+    
+    // 🍃 UI Components
+    private let moviewImageView: UIImageView = {
+        let img = UIImageView()
+        img.image = UIImage(systemName: "square.and.arrow.up.badge.checkmark.fill")
+        img.contentMode = .scaleAspectFit
+        return img
+    }()
+    
+    private let movieTitleLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "Movie Title"
+        lbl.font = .systemFont(ofSize: 12, weight: .light)
+        lbl.textAlignment = .left
+        lbl.textColor = .black
+        return lbl
+    }()
+    
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 3
+        stackView.alignment = .leading
+        return stackView
+    }()
+    
+    private let movieRatingImage: UIImageView = {
+       let img = UIImageView()
+        img.image = UIImage(systemName: "star.fill")
+        img.contentMode = .scaleAspectFit
+       return img
+    }()
+    
+    private let movieRatingLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "8.5"
+        lbl.font = .systemFont(ofSize: 11, weight: .regular)
+        lbl.textColor = .black
+        return lbl
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    
+    func setupUI() {
+        let UIComponents: [UIView] = [movieTitleLabel, moviewImageView, movieRatingImage, movieRatingLabel, stackView]
+        let insideStackView: [UIView] = [movieRatingImage, movieRatingLabel]
+     
+        
+        contentView.addSubview(stackView)
+        contentView.addSubview(moviewImageView)
+        contentView.addSubview(movieTitleLabel)
+       
+       // --MARK: grouping all UI component that stored inside stack view
+        for insideStackVw in insideStackView {
+            stackView.addArrangedSubview(insideStackVw)
+        }
+        
+        // --MARK: grouping all UI components
+        for views in UIComponents {
+            views.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+
+        NSLayoutConstraint.activate([
+            moviewImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+            moviewImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
+            moviewImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
+     
+            moviewImageView.widthAnchor.constraint(equalToConstant: 100),
+            moviewImageView.heightAnchor.constraint(equalToConstant: 50),
+            
+            movieTitleLabel.topAnchor.constraint(equalTo: moviewImageView.bottomAnchor, constant: 4),
+            movieTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
+            movieTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4),
+            
+            stackView.topAnchor.constraint(equalTo: movieTitleLabel.bottomAnchor, constant: 2),
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4)
+            
+        ])
+        
+        
+    }
+    
+    
+    
 }
