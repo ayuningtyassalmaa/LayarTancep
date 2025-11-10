@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+class endpoints {
+    static func getEndpoints (_ keys: endpointsAPI ) -> String {
+        return keys.rawValue
+    }
+    
+    enum endpointsAPI: String {
+    case popularListMovies = "https://api.themoviedb.org/3/movie/popular"
+    }
+}

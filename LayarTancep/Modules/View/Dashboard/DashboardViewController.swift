@@ -6,11 +6,15 @@
 //
 
 import UIKit
+import RxSwift
 
 class DashboardViewController: UIViewController {
     
     
     @IBOutlet weak var collectionCell: UICollectionView!
+    
+    let viewModel = DashboardViewModel()
+    let popularDataList: [PopularMovies] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +22,8 @@ class DashboardViewController: UIViewController {
         // Do any additional setup after loading the view.
         setupCell()
         setupReusableUI()
+        bindVM()
+        viewModel.showPopularMovies()
     }
     
     func setupCell() {
@@ -39,19 +45,30 @@ class DashboardViewController: UIViewController {
         ])
     }
     
+    func bindVM() {
+        viewModel.updatedDataPopularMovies
+            .asObservable()
+            .subscribe(onNext: { [weak self] successShowData
+                in
+                self?.collectionCell.reloadData()
+            })
+    }
+    
 
 }; extension DashboardViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       return 5
+        return viewModel.updatedDataPopularMovies.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let data = viewModel.updatedDataPopularMovies.value[indexPath.row]
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularMoviesCollectionViewCell.identifier, for: indexPath) as? PopularMoviesCollectionViewCell else {
             return UICollectionViewCell()
         }
         
-        cell.setupUI()
+        cell.setupUI(movieImage: data.backdrop_path ?? "", movieTitle: data.original_title ?? "", movieRatingLbl: data.vote_average ?? 0.0 )
         return cell
     }
     

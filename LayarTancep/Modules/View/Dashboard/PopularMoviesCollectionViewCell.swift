@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class PopularMoviesCollectionViewCell: UICollectionViewCell {
     
@@ -53,41 +54,38 @@ class PopularMoviesCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        setupUI()
+        setupUI(movieImage: "", movieTitle: "", movieRatingLbl: 0.0)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    
-    func setupUI() {
+    func setupUI(movieImage: String, movieTitle: String, movieRatingLbl: Double) {
         let UIComponents: [UIView] = [movieTitleLabel, moviewImageView, movieRatingImage, movieRatingLabel, stackView]
         let insideStackView: [UIView] = [movieRatingImage, movieRatingLabel]
-     
+        
         
         contentView.addSubview(stackView)
         contentView.addSubview(moviewImageView)
         contentView.addSubview(movieTitleLabel)
-       
-       // --MARK: grouping all UI component that stored inside stack view
+        
+        // --MARK: grouping all UI component that stored inside stack view
         for insideStackVw in insideStackView {
             stackView.addArrangedSubview(insideStackVw)
         }
         
-        // --MARK: grouping all UI components
+        // --MARK: grouping all UI components for inactive auto resizing
         for views in UIComponents {
             views.translatesAutoresizingMaskIntoConstraints = false
         }
         
-
+        
         NSLayoutConstraint.activate([
             moviewImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
             moviewImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
             moviewImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
-     
+            
             moviewImageView.widthAnchor.constraint(equalToConstant: 100),
             moviewImageView.heightAnchor.constraint(equalToConstant: 50),
             
@@ -97,13 +95,22 @@ class PopularMoviesCollectionViewCell: UICollectionViewCell {
             
             stackView.topAnchor.constraint(equalTo: movieTitleLabel.bottomAnchor, constant: 2),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4)
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
+            
+            movieRatingImage.widthAnchor.constraint(equalToConstant: 12),
+            movieRatingImage.heightAnchor.constraint(equalToConstant: 12)
             
         ])
         
         
+        // --MARK: setup images with SDWebImage
+        guard let movieIMG = URL(string: movieImage) else { return }
+        moviewImageView.sd_setImage(with: movieIMG)
+     
+        
+        // --MARK: setup labels
+        movieTitleLabel.text = movieTitle
+        
+        
     }
-    
-    
-    
 }
