@@ -16,7 +16,7 @@ class PopularMoviesCollectionViewCell: UICollectionViewCell {
     private let moviewImageView: UIImageView = {
         let img = UIImageView()
         img.image = UIImage(systemName: "square.and.arrow.up.badge.checkmark.fill")
-        img.contentMode = .scaleAspectFit
+        img.contentMode = .scaleToFill
         return img
     }()
     
@@ -82,14 +82,14 @@ class PopularMoviesCollectionViewCell: UICollectionViewCell {
         
         
         NSLayoutConstraint.activate([
-            moviewImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
-            moviewImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
-            moviewImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
+            moviewImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2),
+            moviewImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 2),
+            moviewImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -2),
             
-            moviewImageView.widthAnchor.constraint(equalToConstant: 100),
-            moviewImageView.heightAnchor.constraint(equalToConstant: 50),
+            moviewImageView.widthAnchor.constraint(equalToConstant: 250),
+            moviewImageView.heightAnchor.constraint(equalToConstant: 300),
             
-            movieTitleLabel.topAnchor.constraint(equalTo: moviewImageView.bottomAnchor, constant: 4),
+            movieTitleLabel.topAnchor.constraint(equalTo: moviewImageView.bottomAnchor, constant: 15),
             movieTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
             movieTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4),
             

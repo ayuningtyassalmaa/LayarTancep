@@ -30,6 +30,13 @@ class DashboardViewController: UIViewController {
         collectionCell.delegate = self
         collectionCell.dataSource = self
         collectionCell.register(PopularMoviesCollectionViewCell.self, forCellWithReuseIdentifier: PopularMoviesCollectionViewCell.identifier)
+        
+        if let cell = collectionCell.collectionViewLayout as? UICollectionViewFlowLayout {
+            cell.scrollDirection = .horizontal
+            cell.minimumLineSpacing = 2
+            let widthCell = (collectionCell.bounds.width - 50) / 2
+            cell.estimatedItemSize = CGSize(width: widthCell, height: 500)
+        }
     }
     
     func setupReusableUI() {
@@ -50,12 +57,14 @@ class DashboardViewController: UIViewController {
             .asObservable()
             .subscribe(onNext: { [weak self] successShowData
                 in
-                self?.collectionCell.reloadData()
+                DispatchQueue.main.async{
+                    self?.collectionCell.reloadData()
+                }
             })
     }
     
 
-}; extension DashboardViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+}; extension DashboardViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.updatedDataPopularMovies.value.count
     }
@@ -68,9 +77,7 @@ class DashboardViewController: UIViewController {
             return UICollectionViewCell()
         }
         
-        cell.setupUI(movieImage: data.backdrop_path ?? "", movieTitle: data.original_title ?? "", movieRatingLbl: data.vote_average ?? 0.0 )
+        cell.setupUI(movieImage:"https://image.tmdb.org/t/p/w780\(data.poster_path ?? "")", movieTitle: data.original_title ?? "", movieRatingLbl: data.vote_average ?? 0.0 )
         return cell
     }
-    
-    
 }

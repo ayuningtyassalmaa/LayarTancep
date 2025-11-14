@@ -38,7 +38,7 @@
                     </subviews>
                 </stackView>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="ghP-73-irS">
-                    <rect key="frame" x="16" y="164" width="361" height="661"/>
+                    <rect key="frame" x="16" y="164" width="361" height="341"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dwd-Wt-8gc">
                         <size key="itemSize" width="128" height="128"/>
@@ -51,8 +51,8 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="ghP-73-irS" secondAttribute="bottom" constant="27" id="hcg-Ec-ZqK"/>
                 <constraint firstItem="pfB-v2-iH4" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="iqC-1u-DWe"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ghP-73-irS" secondAttribute="bottom" constant="279" id="jqI-Cg-MKw"/>
                 <constraint firstItem="pfB-v2-iH4" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="70" id="ktM-Hb-5LV"/>
                 <constraint firstItem="ghP-73-irS" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="lBc-h0-TIA"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ghP-73-irS" secondAttribute="trailing" constant="16" id="wQe-yd-21V"/>
