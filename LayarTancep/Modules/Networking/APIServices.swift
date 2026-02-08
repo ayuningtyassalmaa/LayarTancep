@@ -16,11 +16,11 @@ class APIServices {
     // Popular Movies list
     func popularMovieslist(completion: @escaping ([PopularMoviesDataResults]?) -> Void) {
         
-        let query : [String: Any] =
-                    ["api_key" : APIKey,
-                    "language": "en-US",
-                     "page": "1",
-                     "region": "US"]
+        let query : [String: Any] = [
+            "api_key" : APIKey,
+            "language": "en-US",
+            "page": "1",
+            "region": "US"]
         let endpoint = endpoints.getEndpoints(.popularListMovies)
         
         AF.request(endpoint, method: .get, parameters: query)
@@ -34,8 +34,34 @@ class APIServices {
                 case .success(let data):
                     completion(data.results ?? [])
                 case .failure(let error):
-                    print("err")
+                    print("error endpoint 1")
                 }
             }
     }
+    
+    // Now playing list
+    func nowPlayingMovieList (completion: @escaping ([PopularMoviesDataResults]?) -> Void)  {
+        
+        let query: [String: Any] = [
+            "api_key" : APIKey,
+            "language" : "US",
+            "page"     : "1",
+            "region"   : "US"
+        ]
+        
+        let endpoint = endpoints.getEndpoints(.nowPlayingMovies)
+        AF.request(endpoint, method: .get, parameters: query)
+            .validate()
+            .responseDecodable(of: PopularMovies.self) {
+                response in
+                switch response.result {
+                case .success(let success):
+                    completion(success.results ?? [])
+                case .failure(let err):
+                    print("error endpoint 2", err)
+                }
+            }
+        
+    }
+    
 }

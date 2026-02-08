@@ -13,6 +13,7 @@ class endpoints {
     }
     
     enum endpointsAPI: String {
-    case popularListMovies = "https://api.themoviedb.org/3/movie/popular"
+        case popularListMovies = "https://api.themoviedb.org/3/movie/popular"
+        case nowPlayingMovies = "https://api.themoviedb.org/3/movie/now_playing"
     }
 }

@@ -21,11 +21,13 @@ protocol DashboardViewModelInputStream {
 
 protocol DashboardViewModelOuputStream {
     var isUpdateDataPopularMovies: Observable<[PopularMoviesDataResults]> {get}
+    var isUpdateDataNowPlayingMovies: Observable<[PopularMoviesDataResults]> {get}
 }
 
 
 class DashboardViewModel {
     var updatedDataPopularMovies = BehaviorRelay<[PopularMoviesDataResults]>(value: [])
+    var updatedDataNowPlayingMovies = BehaviorRelay<[PopularMoviesDataResults]>(value: [])
     let apiService = APIServices()
 };
 
@@ -51,9 +53,26 @@ extension DashboardViewModel: DashboardViewModelInputStream {
             }
         }
     }
+    
+    func showNowPlayingMovies() {
+        apiService.nowPlayingMovieList { [weak self] data in
+            guard let self = self else {return}
+            
+            DispatchQueue.main.async {
+                if let successData = data {
+                    self.updatedDataNowPlayingMovies.accept(successData)
+                }
+            }
+        }
+    }
+    
 };
 
 extension DashboardViewModel: DashboardViewModelOuputStream {
+    var isUpdateDataNowPlayingMovies: RxSwift.Observable<[PopularMoviesDataResults]> {
+        return updatedDataNowPlayingMovies.asObservable()
+    }
+    
     var isUpdateDataPopularMovies: RxSwift.Observable<[PopularMoviesDataResults]> {
         return updatedDataPopularMovies.asObservable()
     }

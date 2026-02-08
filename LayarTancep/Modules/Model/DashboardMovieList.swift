@@ -8,6 +8,7 @@
 import Foundation
 
 struct PopularMovies: Codable {
+    let dates: Dates?
     let page: Int?
     let results: [PopularMoviesDataResults]?
     let total_pages: Int?
@@ -29,5 +30,10 @@ struct PopularMoviesDataResults: Codable {
     let video: Bool?
     let vote_average: Double?
     let vote_count: Int?
+}
+
+struct Dates: Codable {
+    let maximum: String?
+    let minimum: String?
 }
 
